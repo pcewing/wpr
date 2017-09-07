@@ -50,6 +50,7 @@ func SetWallpapers(config Config) {
 	cmd := "feh"
 	args := []string{"--no-fehbg", "--bg-scale"}
 
+	rand.Seed(time.Now().UTC().UnixNano())
 	for i := 0; i < config.DisplayCount; i++ {
 		index := rand.Int() % len(files)
 		args = append(args, files[index])
@@ -62,7 +63,8 @@ func SetWallpapers(config Config) {
 }
 
 func ReadConfigFile() Config {
-	content, err := ioutil.ReadFile("/home/paul/.config/wpr/wprrc.json")
+	home := os.Getenv("HOME")
+	content, err := ioutil.ReadFile(fmt.Sprintf("%s/.config/wpr/wprrc.json", home))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -77,6 +79,8 @@ func ReadConfigFile() Config {
 	} else if err != nil {
 		log.Fatal(err)
 	}
+
+	config.WallpaperDir = os.ExpandEnv(config.WallpaperDir)
 
 	fmt.Printf("Config:\n  Wallpaper Directory: %s\n  Display Count: %d\n  Interval: %d\n",
 		config.WallpaperDir,
