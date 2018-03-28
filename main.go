@@ -83,21 +83,20 @@ func SetPixmapProperty(X *xgb.Conn, root xproto.Window, propName string, pixmap 
 	}
 
 	data := Int32ToByteSlice(int32(pixmap), BigEndian)
-	//data := Int32ToByteSlice(int32(pixmap), LittleEndian)
 
 	for i, e := range data {
 		fmt.Printf("Byte %d: %d\n", i, e)
 	}
 
 	xproto.ChangePropertyChecked(
-		X, // Display *xgb.Conn
-		xproto.PropModeReplace, // Mode byte
-		root,          // Window Window
-		propAtom.Atom, // Property Atom
-		typAtom.Atom,  // Type Atom
-		32,            // Format byte
-		1,             // DataLen uint32
-		data,          // Data []byte
+		/* Display *xgb.Conn */ X,
+		/* Mode byte */ xproto.PropModeReplace,
+		/* Window Window */ root,
+		/* Property Atom */ propAtom.Atom,
+		/* Type Atom */ typAtom.Atom,
+		/* Format byte */ 32,
+		/* DataLen uint32 */ 1,
+		/* Data []byte */ data,
 	).Check()
 
 	if err != nil {
