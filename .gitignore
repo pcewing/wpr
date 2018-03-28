@@ -1,2 +1,6 @@
 wpr
+wpr2
 **/*.swp
+
+.idea/
+/tags
