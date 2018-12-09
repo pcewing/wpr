@@ -28,5 +28,5 @@ go install $GOPATH/src/github.com/pcewing/wpr
 
 ## Running
 ```bash
-wpr # kek
+wpr
 ```
